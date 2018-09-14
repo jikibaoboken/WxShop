@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.springmvc.dao.ShopMapper" >
+  <resultMap id="BaseResultMap" type="com.itheima.springmvc.pojo.Shop" >
+    <id column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="shop_type" property="shopType" jdbcType="VARCHAR" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_address" property="shopAddress" jdbcType="VARCHAR" />
+    <result column="goods_type_numbers" property="goodsTypeNumbers" jdbcType="INTEGER" />
+    <result column="shop_image" property="shopImage" jdbcType="VARCHAR" />
+    <result column="shop_level" property="shopLevel" jdbcType="INTEGER" />
+    <result column="shop_phone" property="shopPhone" jdbcType="VARCHAR" />
+    <result column="shop_condition" property="shopCondition" jdbcType="INTEGER" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="shop_introduction" property="shopIntroduction" jdbcType="VARCHAR" />
+    <result column="least_count" property="leastCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    shop_id, shop_type, shop_name, shop_address, goods_type_numbers, shop_image, shop_level, 
+    shop_phone, shop_condition, seller_id, shop_introduction, least_count
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.springmvc.pojo.ShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itheima.springmvc.pojo.ShopExample" >
+    delete from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itheima.springmvc.pojo.Shop" 
+   useGeneratedKeys="true" keyProperty="shopId">
+    insert into shop (shop_id, shop_type, shop_name, 
+      shop_address, goods_type_numbers, shop_image, 
+      shop_level, shop_phone, shop_condition, 
+      seller_id, shop_introduction, least_count
+      )
+    values (#{shopId,jdbcType=INTEGER}, #{shopType,jdbcType=VARCHAR}, #{shopName,jdbcType=VARCHAR}, 
+      #{shopAddress,jdbcType=VARCHAR}, #{goodsTypeNumbers,jdbcType=INTEGER}, #{shopImage,jdbcType=VARCHAR}, 
+      #{shopLevel,jdbcType=INTEGER}, #{shopPhone,jdbcType=VARCHAR}, #{shopCondition,jdbcType=INTEGER}, 
+      #{sellerId,jdbcType=INTEGER}, #{shopIntroduction,jdbcType=VARCHAR}, #{leastCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itheima.springmvc.pojo.Shop" >
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopType != null" >
+        shop_type,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopAddress != null" >
+        shop_address,
+      </if>
+      <if test="goodsTypeNumbers != null" >
+        goods_type_numbers,
+      </if>
+      <if test="shopImage != null" >
+        shop_image,
+      </if>
+      <if test="shopLevel != null" >
+        shop_level,
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone,
+      </if>
+      <if test="shopCondition != null" >
+        shop_condition,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="shopIntroduction != null" >
+        shop_introduction,
+      </if>
+      <if test="leastCount != null" >
+        least_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopType != null" >
+        #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeNumbers != null" >
+        #{goodsTypeNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="shopImage != null" >
+        #{shopImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLevel != null" >
+        #{shopLevel,jdbcType=INTEGER},
+      </if>
+      <if test="shopPhone != null" >
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCondition != null" >
+        #{shopCondition,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="shopIntroduction != null" >
+        #{shopIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="leastCount != null" >
+        #{leastCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itheima.springmvc.pojo.ShopExample" resultType="java.lang.Integer" >
+    select count(*) from shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shop
+    <set >
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopType != null" >
+        shop_type = #{record.shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopAddress != null" >
+        shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsTypeNumbers != null" >
+        goods_type_numbers = #{record.goodsTypeNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopImage != null" >
+        shop_image = #{record.shopImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLevel != null" >
+        shop_level = #{record.shopLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopPhone != null" >
+        shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopCondition != null" >
+        shop_condition = #{record.shopCondition,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellerId != null" >
+        seller_id = #{record.sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopIntroduction != null" >
+        shop_introduction = #{record.shopIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leastCount != null" >
+        least_count = #{record.leastCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shop
+    set shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_type = #{record.shopType,jdbcType=VARCHAR},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_address = #{record.shopAddress,jdbcType=VARCHAR},
+      goods_type_numbers = #{record.goodsTypeNumbers,jdbcType=INTEGER},
+      shop_image = #{record.shopImage,jdbcType=VARCHAR},
+      shop_level = #{record.shopLevel,jdbcType=INTEGER},
+      shop_phone = #{record.shopPhone,jdbcType=VARCHAR},
+      shop_condition = #{record.shopCondition,jdbcType=INTEGER},
+      seller_id = #{record.sellerId,jdbcType=INTEGER},
+      shop_introduction = #{record.shopIntroduction,jdbcType=VARCHAR},
+      least_count = #{record.leastCount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.springmvc.pojo.Shop" >
+    update shop
+    <set >
+      <if test="shopType != null" >
+        shop_type = #{shopType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTypeNumbers != null" >
+        goods_type_numbers = #{goodsTypeNumbers,jdbcType=INTEGER},
+      </if>
+      <if test="shopImage != null" >
+        shop_image = #{shopImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLevel != null" >
+        shop_level = #{shopLevel,jdbcType=INTEGER},
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCondition != null" >
+        shop_condition = #{shopCondition,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="shopIntroduction != null" >
+        shop_introduction = #{shopIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="leastCount != null" >
+        least_count = #{leastCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itheima.springmvc.pojo.Shop" >
+    update shop
+    set shop_type = #{shopType,jdbcType=VARCHAR},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR},
+      goods_type_numbers = #{goodsTypeNumbers,jdbcType=INTEGER},
+      shop_image = #{shopImage,jdbcType=VARCHAR},
+      shop_level = #{shopLevel,jdbcType=INTEGER},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_condition = #{shopCondition,jdbcType=INTEGER},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      shop_introduction = #{shopIntroduction,jdbcType=VARCHAR},
+      least_count = #{leastCount,jdbcType=INTEGER}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+</mapper>

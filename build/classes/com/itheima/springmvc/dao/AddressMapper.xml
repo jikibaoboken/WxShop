@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.springmvc.dao.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.itheima.springmvc.pojo.Address" >
+    <id column="host_id" property="hostId" jdbcType="INTEGER" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="host_address" property="hostAddress" jdbcType="VARCHAR" />
+    <result column="host_type" property="hostType" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="REAL" />
+    <result column="latitude" property="latitude" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    host_id, host_name, host_address, host_type, longitude, latitude
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.springmvc.pojo.AddressExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from address
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from address
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itheima.springmvc.pojo.AddressExample" >
+    delete from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itheima.springmvc.pojo.Address" >
+    insert into address (host_id, host_name, host_address, 
+      host_type, longitude, latitude
+      )
+    values (#{hostId,jdbcType=INTEGER}, #{hostName,jdbcType=VARCHAR}, #{hostAddress,jdbcType=VARCHAR}, 
+      #{hostType,jdbcType=VARCHAR}, #{longitude,jdbcType=REAL}, #{latitude,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itheima.springmvc.pojo.Address" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hostId != null" >
+        host_id,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="hostAddress != null" >
+        host_address,
+      </if>
+      <if test="hostType != null" >
+        host_type,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hostId != null" >
+        #{hostId,jdbcType=INTEGER},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostAddress != null" >
+        #{hostAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hostType != null" >
+        #{hostType,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=REAL},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itheima.springmvc.pojo.AddressExample" resultType="java.lang.Integer" >
+    select count(*) from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update address
+    <set >
+      <if test="record.hostId != null" >
+        host_id = #{record.hostId,jdbcType=INTEGER},
+      </if>
+      <if test="record.hostName != null" >
+        host_name = #{record.hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hostAddress != null" >
+        host_address = #{record.hostAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hostType != null" >
+        host_type = #{record.hostType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=REAL},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update address
+    set host_id = #{record.hostId,jdbcType=INTEGER},
+      host_name = #{record.hostName,jdbcType=VARCHAR},
+      host_address = #{record.hostAddress,jdbcType=VARCHAR},
+      host_type = #{record.hostType,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=REAL},
+      latitude = #{record.latitude,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.springmvc.pojo.Address" >
+    update address
+    <set >
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostAddress != null" >
+        host_address = #{hostAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="hostType != null" >
+        host_type = #{hostType,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=REAL},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=REAL},
+      </if>
+    </set>
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itheima.springmvc.pojo.Address" >
+    update address
+    set host_name = #{hostName,jdbcType=VARCHAR},
+      host_address = #{hostAddress,jdbcType=VARCHAR},
+      host_type = #{hostType,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=REAL},
+      latitude = #{latitude,jdbcType=REAL}
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </update>
+</mapper>

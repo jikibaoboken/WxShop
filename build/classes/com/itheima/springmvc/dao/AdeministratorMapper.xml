@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.springmvc.dao.AdeministratorMapper" >
+  <resultMap id="BaseResultMap" type="com.itheima.springmvc.pojo.Adeministrator" >
+    <id column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="power_level" property="powerLevel" jdbcType="INTEGER" />
+    <result column="administrator_name" property="administratorName" jdbcType="VARCHAR" />
+    <result column="administrator_pwd" property="administratorPwd" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    admin_id, power_level, administrator_name, administrator_pwd
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.itheima.springmvc.pojo.AdeministratorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from adeministrator
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from adeministrator
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from adeministrator
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.itheima.springmvc.pojo.AdeministratorExample" >
+    delete from adeministrator
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.itheima.springmvc.pojo.Adeministrator" >
+    insert into adeministrator (admin_id, power_level, administrator_name, 
+      administrator_pwd)
+    values (#{adminId,jdbcType=INTEGER}, #{powerLevel,jdbcType=INTEGER}, #{administratorName,jdbcType=VARCHAR}, 
+      #{administratorPwd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itheima.springmvc.pojo.Adeministrator" >
+    insert into adeministrator
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="powerLevel != null" >
+        power_level,
+      </if>
+      <if test="administratorName != null" >
+        administrator_name,
+      </if>
+      <if test="administratorPwd != null" >
+        administrator_pwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="powerLevel != null" >
+        #{powerLevel,jdbcType=INTEGER},
+      </if>
+      <if test="administratorName != null" >
+        #{administratorName,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorPwd != null" >
+        #{administratorPwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.itheima.springmvc.pojo.AdeministratorExample" resultType="java.lang.Integer" >
+    select count(*) from adeministrator
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update adeministrator
+    <set >
+      <if test="record.adminId != null" >
+        admin_id = #{record.adminId,jdbcType=INTEGER},
+      </if>
+      <if test="record.powerLevel != null" >
+        power_level = #{record.powerLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.administratorName != null" >
+        administrator_name = #{record.administratorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.administratorPwd != null" >
+        administrator_pwd = #{record.administratorPwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update adeministrator
+    set admin_id = #{record.adminId,jdbcType=INTEGER},
+      power_level = #{record.powerLevel,jdbcType=INTEGER},
+      administrator_name = #{record.administratorName,jdbcType=VARCHAR},
+      administrator_pwd = #{record.administratorPwd,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itheima.springmvc.pojo.Adeministrator" >
+    update adeministrator
+    <set >
+      <if test="powerLevel != null" >
+        power_level = #{powerLevel,jdbcType=INTEGER},
+      </if>
+      <if test="administratorName != null" >
+        administrator_name = #{administratorName,jdbcType=VARCHAR},
+      </if>
+      <if test="administratorPwd != null" >
+        administrator_pwd = #{administratorPwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itheima.springmvc.pojo.Adeministrator" >
+    update adeministrator
+    set power_level = #{powerLevel,jdbcType=INTEGER},
+      administrator_name = #{administratorName,jdbcType=VARCHAR},
+      administrator_pwd = #{administratorPwd,jdbcType=VARCHAR}
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </update>
+</mapper>
